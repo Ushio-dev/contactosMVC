@@ -1,10 +1,7 @@
 package com.example.contactos.model;
 
 import com.example.contactos.dto.ContactoRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.Bean;
 
@@ -16,7 +13,9 @@ public class Contacto {
 
     private String nombre;
     private String numero;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
     public Contacto() {
     }
 
@@ -29,6 +28,7 @@ public class Contacto {
     public Contacto(ContactoRequest contactoRequest) {
         this.nombre = contactoRequest.getNombre();
         this.numero = contactoRequest.getNumero();
+        this.usuario = contactoRequest.getUsuario();
     }
 
     public Long getId() {
@@ -53,5 +53,13 @@ public class Contacto {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
