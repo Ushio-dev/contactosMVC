@@ -25,6 +25,13 @@ public class Contacto {
         this.numero = numero;
     }
 
+    public Contacto(Long id, String nombre, String numero, Usuario usuario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.numero = numero;
+        this.usuario = usuario;
+    }
+
     public Contacto(ContactoRequest contactoRequest) {
         this.nombre = contactoRequest.getNombre();
         this.numero = contactoRequest.getNumero();
