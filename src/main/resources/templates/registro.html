@@ -14,6 +14,16 @@
 <body>
     <div class="container w-25 border p-4 mt-4">
         <form th:object="${usuario}" th:action="@{/registro}" method="post" >
+            <div th:if="${param.exito}">
+                <div class="alert alert-info">
+                    Se ha Registrado Exitosamente
+                </div>
+            </div>
+            <div th:if="${param.error}">
+                <div class="alert alert-info">
+                    No se ha Registrado :c
+                </div>
+            </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Correo:</label>
               <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" th:field="*{email}">
@@ -28,7 +38,10 @@
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
                 <button type="submit" class="btn btn-primary">Registrarse</button>  
-            </div>        
+            </div>
+            <div>
+                <span><a th:href="@{/login}">Volver a Login</a></span>
+            </div>
           </form>
     </div>
 </body>
