@@ -3,6 +3,9 @@ package com.example.contactos.controller;
 import com.example.contactos.dto.ContactoRequest;
 import com.example.contactos.model.Contacto;
 import com.example.contactos.service.ContactoServiceImpl;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,16 +22,19 @@ public class ContactosController {
         this.contactoService = contactoService;
     }
     @GetMapping("/")
-    public String holaMundo(Model model) {
-        List<Contacto> contactos = contactoService.readAll();
+    public String holaMundo(Model model) {;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        List<Contacto> contactos = contactoService.readAllUserContacts(currentPrincipalName);
         model.addAttribute("contactos", contactos);
         return "index";
     }
 
     @PostMapping(value = "/add")
     public String agregar(@ModelAttribute("contacto") ContactoRequest contactoRequest, BindingResult result) {
-
-        contactoService.add(contactoRequest);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        contactoService.add(contactoRequest, currentPrincipalName);
 
         return "redirect:/";
     }

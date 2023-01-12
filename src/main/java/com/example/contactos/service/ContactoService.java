@@ -9,11 +9,13 @@ import java.util.Optional;
 public interface ContactoService {
     List<Contacto> readAll();
 
-    void add(ContactoRequest contactoRequest);
+    void add(ContactoRequest contactoRequest, String usuario);
 
     Optional<Contacto> readOne(Long id);
 
     void actualizar(Contacto contacto);
 
     void eliminarById(Long id);
+
+    List<Contacto> readAllUserContacts(String user);
 }
